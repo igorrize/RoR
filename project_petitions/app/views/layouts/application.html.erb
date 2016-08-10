@@ -73,6 +73,24 @@
               <li><h4><%= link_to "Создать петицию", new_petition_path  %></h4></li>
               <% if current_user %>
                 <li><h4><%= link_to "Мои петиции", petitions_path(my: true)  %></h4></li>
+                <html>
+<head>
+  <title>MkdevPgSeach</title>
+  <%= stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track' => true %>
+  <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
+  <%= csrf_meta_tags %>
+</head>
+<body>
+
+<%= form_tag results_path, method: :get, role: 'search' do %>
+  <%= text_field_tag :query, params[:query] %>
+  <%= submit_tag "Искать", name: nil %>
+<% end %>
+
+<%= yield %>
+
+</body>
+</html>
               <% end %>
             </ul>
           </div><!--/.well -->

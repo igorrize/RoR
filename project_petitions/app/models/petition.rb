@@ -9,6 +9,9 @@ class Petition < ActiveRecord::Base
   scope :expired, -> { where('DATE(created_at) < ?', EXPIRATION_DAYS.days.ago) }
 
   validate :validate_petition_is_not_expired, on: :update
+      
+  include PgSearch
+  pg_search_scope :search_everywhere, against: [:title, :description]
 
   def validate_petition_is_not_expired
     errors.add(:base, I18n.t('petition.errors.expired')) if expired?
